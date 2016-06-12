@@ -85,7 +85,8 @@ function getResults() {
 
 			document.getElementById("data").innerHTML = jsonData;
 
-			 console.log(jsonData);
+			//SHOULD SEE EVERYTING HERE - TESTING
+			//----> console.log(jsonData);
 
 			//JSON data includes a []
 
@@ -261,14 +262,23 @@ function getResults() {
 				//console.log(datas.posts[x]);
 
 
+				//customize label based on number of keywords
+				//unfortunately, only 1 char is allowed to display in marker label
+				if (datas.posts[x].Count == 0)
+					label = '0' ;
+				else
+					label = '☺';
+
+
+
 				// new marker
 				var myLatLng2 = {lat: datas.posts[x].Lat, lng: datas.posts[x].Long};
 				var marker2 = new google.maps.Marker({
 					position: myLatLng2,
 					map: map,
 					title: datas.posts[x].Name,
-					label: datas.posts[x].Area,
-					html: '<div>Keyword count:' +  datas.posts[x].Count  + '</div>'
+					label: label,
+					html: '<div>Keyword count:' +  datas.posts[x].Count  + '<br />Area: ' +  datas.posts[x].Area   + '<br />' +  datas.posts[x].Name   + '</div>'
 				});
 
 				//add to markers array

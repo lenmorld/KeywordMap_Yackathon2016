@@ -11,9 +11,6 @@ if (isset($_POST['keyword']))
 {
 	$query = $_POST['keyword'];
 
-
-
-
     //keyword count + accidents + weather info
     //REALLY SLOW!!! (need to cache data)
 	//$str = exec('python ./keyword-search_complete.py ' . $query );
@@ -25,7 +22,7 @@ if (isset($_POST['keyword']))
     //just keyword count
     $str = exec('python ./keyword-search.py ' . $query );
 
-    echo $str;
+    //echo $str;
 
 
 
@@ -98,7 +95,7 @@ for ($x = 0; $x < count($allProducts); $x++) {
 	if (!empty($_POST['keyword']))
 	{
 		//redirect
-		//header('Location: mapping.php');
+		header('Location: mapping.php');
 	}	
 	  
 ?>
