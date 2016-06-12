@@ -85,7 +85,7 @@ function getResults() {
 
 			document.getElementById("data").innerHTML = jsonData;
 
-			 console.log(jsonData);
+			//console.log(jsonData);
 
 			//JSON data includes a []
 
@@ -100,12 +100,9 @@ function getResults() {
 			//obj = JSON.parse(jsonData);
 
 			//convert to a string to be able to store in HTML localStorage
-
-			//console.log(jsonData);
-
 			obj = JSON.stringify(jsonData);
 			localStorage.setItem("searchResults", obj);
-
+			
 			//console.log(obj);
 			//console.log(obj.length);
 			//console.log(parseJSON($jsonData));
@@ -172,15 +169,12 @@ function getResults() {
 	//console.log(datas);
 
 	//console.log(datas.posts[0]);
-	//console.log(datas.posts[1]);
-	console.log(datas.posts[1] == null);
+	//console.log(datas.posts[2]);
 	//console.log(datas.keyword);
 
 	//console.log("count" + datas.posts.length);
 
 	//console.log(datas.posts[0].Area);
-
-	console.log("length:" + datas.posts.length);
 
 	//print HTML table of obtained location tuples
 	htmlString = "<table border='1'>";
@@ -189,24 +183,13 @@ function getResults() {
 		{
 			//htmlString += "<tr><td>" + datas[x].Area + "</td><td>" + datas[x].Count + "</td><td>" + datas[x].Lat + "</td><td>" + datas[x].Long + "</td><td>" + datas[x].Name + "</td></tr>"	;
 
+			console.log( datas.posts[x].Area);
+			console.log( datas.posts[x].Count);
+			console.log( datas.posts[x].Lat);
+			console.log( datas.posts[x].Long);
+			console.log( datas.posts[x].Name);
 
-
-			//console.log( datas.posts[x].Area);
-			//console.log( datas.posts[x].Count);
-			//console.log( datas.posts[x].Lat);
-			//console.log( datas.posts[x].Long);
-			//console.log( datas.posts[x].Name);
-
-			//console.log(datas.posts[x].Area == null);
-
-			if (datas.posts[x] == null)
-			{
-				console.log("null object");
-			}
-			else
-			{
-				htmlString += "<tr><td>" + datas.posts[x].Area + "</td><td>" + datas.posts[x].Count + "</td><td>" + datas.posts[x].Lat + "</td><td>" + datas.posts[x].Long + "</td><td>" + datas.posts[x].Name + "</td></tr>"	;
-			}
+			//htmlString += "<tr><td>" + datas.posts[x].Area + "</td><td>" + datas.posts[x].Count + "</td><td>" + datas.posts[x].Lat + "</td><td>" + datas.posts[x].Long + "</td><td>" + datas.posts[x].Name + "</td></tr>"	;
 
 		}
 	htmlString += "</table>";
@@ -214,7 +197,7 @@ function getResults() {
 	//console.log(JSON.parse(dataStored));
 	document.getElementById("scratch").innerHTML = "=====================================" + htmlString;
 
-	//console.log(htmlString);
+	console.log(htmlString);
 
 	//use center location as the center
 	var myCenter = new google.maps.LatLng(45.52605, -73.59505);
@@ -248,67 +231,55 @@ function getResults() {
 		var markers = [];
 
 		// loop through locations, get their Lat ang Long then make markers for each
-		for (x=0; x < datas.posts.length; x++)
+		for (x=0; x < datas.length; x++)
 		{
+			  console.log(datas[x].Lat);
+			  //window.alert(loc1.Lat);
 
-			if (datas.posts[x] == null)
-			{
-				//console.log("FUCK NULL" + x);
-			}
-			else
-			{
+			// new marker
+			var myLatLng2 = {lat: datas[x].Lat, lng:datas[x].Long};
+			var marker2 = new google.maps.Marker({
+			  position: myLatLng2,
+				map: map,
+			  title: datas[x].Name,
+			  label: datas[x].Area,
+			  html: '<div>Keyword count:' +  datas[x].Count  + '</div>'
+			});
 
-				//console.log(datas.posts[x]);
-
-
-				// new marker
-				var myLatLng2 = {lat: datas.posts[x].Lat, lng: datas.posts[x].Long};
-				var marker2 = new google.maps.Marker({
-					position: myLatLng2,
-					map: map,
-					title: datas.posts[x].Name,
-					label: datas.posts[x].Area,
-					html: '<div>Keyword count:' +  datas.posts[x].Count  + '</div>'
-				});
-
-				//add to markers array
-				markers.push(marker2);
+			//add to markers array
+			markers.push(marker2);
 
 
-				//string for info window
-				var infowindow = new google.maps.InfoWindow({
-					content: "hehe"
-				});
+			//string for info window
+			var infowindow = new google.maps.InfoWindow({
+				content: "hehe"
+			});
 
 
-				console.log(markers[x]);
+			console.log(markers[x].html);
 
-				/*
-				 //BUGGY: only applies html to last one
+			/*
+			//BUGGY: only applies html to last one
 
-				 markers[x].addListener('click', function() {
+			markers[x].addListener('click', function() {
 
-				 infowindow.setContent(markers[x].html);
-				 infowindow.open(map, markers[x]);
-				 });
-				 */
+				infowindow.setContent(markers[x].html);
+				infowindow.open(map, markers[x]);
+			});
+			*/
 
-				//this one works - puts a listener to this current marker
-				google.maps.event.addListener(marker2,'click', function() {
+			//this one works - puts a listener to this current marker
+			google.maps.event.addListener(marker2,'click', function() {
 
-					infowindow.setContent(this.html);
-					infowindow.open(map, this);
+				infowindow.setContent(this.html);
+				infowindow.open(map, this);
 
-				});
-
-
-				//same as setting the map attrib in marker def
-				//marker2.setMap(map);
-			}
+			});
 
 
-
-		} // #END FOR
+			//same as setting the map attrib in marker def
+			//marker2.setMap(map);
+		}
 
 	}	//end of GoogleMaps init()
 

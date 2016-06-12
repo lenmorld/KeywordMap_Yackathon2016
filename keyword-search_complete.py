@@ -352,7 +352,10 @@ weather = [];
 with open('./weather2015.csv') as csvfile:
     data3 = csv.DictReader(csvfile)
     for row3 in data3:
-        weather.append( row3['Tm'] );
+        if (row3['Tm'] != '' ):
+            weather.append( row3['Tm'] );
+
+
 
 #for x in accidentAreas : print (x)
 
@@ -617,14 +620,14 @@ i=0
 for dictItem in dictItems:
     reviews_area[dictItem[0]] = " "
 
-    '''
+    
     #get weather
-    if weather[i]:
+    #if weather[i]:
     weatherPerArea[dictItem[0]] = weather[i]
-    else:
-    weatherPerArea[dictItem[0]] = 0
-    i = i + 1
-    '''
+    #else:
+	#	weatherPerArea[dictItem[0]] = 0
+    #i = i + 1
+    
                     
     #print (dictItem)
     for num in range(0,N-1):
@@ -633,29 +636,29 @@ for dictItem in dictItems:
             #concatenate them
             reviews_area[dictItem[0]] = reviews_area[dictItem[0]]  + data["results"][num]["text"]
             
-            '''
+            
             for x in accidentAreas: 
-            if hasStreet(x, data["results"][num]["full_address"]):
-                #increase the number of accidents per area if match
-                accidentPerArea[dictItem[0]] = accidentPerArea[dictItem[0]] + 1           
-                #print (data["results"][num]["full_address"])
-                #print (row['RUE_ACCDN'])
+                if hasStreet(x, data["results"][num]["full_address"]):
+                    #increase the number of accidents per area if match
+                    accidentPerArea[dictItem[0]] = accidentPerArea[dictItem[0]] + 1           
+                    #print (data["results"][num]["full_address"])
+                    #print (row['RUE_ACCDN'])
 
             for y in bikeAccidentAreas:
-            if hasStreet(y, data["results"][num]["full_address"]):
-                #increase the number of accidents per area if match
-                accidentPerArea[dictItem[0]] = accidentPerArea[dictItem[0]] + 1           
-                #print (data["results"][num]["full_address"])
-                #print (row['RUE_ACCDN'])
+                if hasStreet(y, data["results"][num]["full_address"]):
+                    #increase the number of accidents per area if match
+                    accidentPerArea[dictItem[0]] = accidentPerArea[dictItem[0]] + 1           
+                    #print (data["results"][num]["full_address"])
+                    #print (row['RUE_ACCDN'])
 
 
             for z in pedestrianAccidentAreas:
-            if hasStreet(z, data["results"][num]["full_address"]):
-                #increase the number of accidents per area if match
-                accidentPerArea[dictItem[0]] = accidentPerArea[dictItem[0]] + 1           
-                #print (data["results"][num]["full_address"])
-                #print (row['RUE_ACCDN'])
-            '''
+                if hasStreet(z, data["results"][num]["full_address"]):
+                    #increase the number of accidents per area if match
+                    accidentPerArea[dictItem[0]] = accidentPerArea[dictItem[0]] + 1           
+                    #print (data["results"][num]["full_address"])
+                    #print (row['RUE_ACCDN'])
+            
 
 '''			
 print("========ACCIDENTS=======")
@@ -739,7 +742,6 @@ strResult = " "
 resultList = []
 
 
-### no need to geocode everytime, just load from file #####
 
 for dictItem in dictItems:
     strResult += str(dictItem[0]) + " " + str(dictItem[1]) + " " +  str(dictKeyword[dictItem[0]])
@@ -748,15 +750,19 @@ for dictItem in dictItems:
     tempDict['Area'] =  str(dictItem[0]) 
     tempDict['Name'] =  str(dictItem[1])  
     tempDict['Count'] = dictKeyword[dictItem[0]]
+	
+    #add other info
+    tempDict['Accidents'] = accidentPerArea[dictItem[0]]
+    tempDict['Weather'] = weatherPerArea[dictItem[0]]
 
     #get the lat_long for this ZIP CODE
-    
     tempDict['Lat'] = geo_data[dictItem[0]][1]
     tempDict['Long'] = geo_data[dictItem[0]][2]
     
     resultList.append(tempDict)
     
 
+### no need to geocode everytime, just load from file #####
 
 '''
     url = 'https://maps.googleapis.com/maps/api/geocode/json'

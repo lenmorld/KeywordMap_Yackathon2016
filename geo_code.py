@@ -1,3 +1,12 @@
+# GEOLOCATION CACHE
+
+# this script uses Google's geolocation API, (by providing a key)
+# to map Montreal Postal area codes (e.g. H1A) to latitude, longitude pairs
+# this allows us to save the number of geolocation we are allowed per day
+# (around 200/day on a free account)
+
+# DONT RUN IT TOO MUCH, ONCE IS PROBABLY ENOUGH
+# since geolocation data is unlikely to change
 
 import sys, webbrowser, bs4
 import json
@@ -131,8 +140,6 @@ dict = {
   'H8Z' : ['Pierrefonds' , 0.0, 0.0 ], 
         };
 
-
-
 dictItems = dict.items()
 data = ""
 
@@ -153,6 +160,7 @@ for dictItem in dictItems:
  
     
 #print(data)
-    
-with open('data.txt', 'w') as outfile:
+
+#write results to a file    
+with open('geo.json', 'w') as outfile:
     json.dump(dict, outfile)

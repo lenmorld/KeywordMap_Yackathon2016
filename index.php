@@ -2,42 +2,45 @@
 <?php
 //here we get the input keyword from user
 
+
 $str = " ";
 
 $sample = "haha";
 
 if (isset($_POST['keyword']))
 {
-	//echo $_POST['keyword'];
 	$query = $_POST['keyword'];
-	$str = exec('python ./keyword-search.py ' . $query );
-	//echo $str;
-}
-	//$query = $_POST['searchQuery'];
-	//$JSONresult = exec('python ./php-python/NCIXsearch.py ' . $query );
 
-	//$myDict = json_decode(file_get_contents('/tmp/mydict'));
-	
+
+
+
+    //keyword count + accidents + weather info
+    //REALLY SLOW!!! (need to cache data)
+	//$str = exec('python ./keyword-search_complete.py ' . $query );
+
+    //causes
+    //Fatal error: Maximum execution time of 30 seconds exceeded in C:\xampp2\htdocs\python\index.php on line 15
+
+
+    //just keyword count
+    $str = exec('python ./keyword-search.py ' . $query );
+
+    echo $str;
+
+
+
+}
 	//decode the JSON $JSONresult
 	$JSONresult = $str;
 
-	//$JSONresult = str_replace('"',"'" , $JSONresult);
-	
-	//var_dump(json_decode($JSONresult));
-	//var_dump(json_decode($JSONresult, true));
-	
-
 	$JSONresult = trim($JSONresult, '[');       //remove the extra brackets
 	$JSONresult = trim($JSONresult, ']');
-	
-
 
     $JSONresult = str_replace("}, {", "}==x=={" ,$JSONresult );
    
    $itemArray = explode("==x==", $JSONresult);
    
    //print_r( $itemArray);
-   
 
 	$allProducts = array();
 	
@@ -45,43 +48,42 @@ if (isset($_POST['keyword']))
   foreach ($itemArray as $value) {
       
      // echo $value;
-     
       //\xa0 is actually non-breaking space in Latin1 (ISO 8859-1), also chr(160). You should replace it with a space.
       
        $itemExplode = str_replace('\xa0', ' ', $value );    
        
         $itemExplode = str_replace("'", '"' ,$itemExplode);                  //replace single quotes with double quotes
-        
-       //$itemExplode = str_replace(': u"', ': "' , $itemExplode);      //remove unicode mark
+
         array_push($allProducts, $itemExplode );
         //echo $itemExplode;
         //var_dump(json_decode($itemExplode));
-        
   }
 
   $allItems = array();
 
-   //print_r($allProducts);
+    //print_r($allProducts);
 
-	    for ($x = 0; $x < count($allProducts); $x++) {
+for ($x = 0; $x < count($allProducts); $x++) {
 
-            $currentItem = json_decode($allProducts[$x], true);
-	
-			//print_r( $currentItem);
-			
-			array_push($allItems, $currentItem);
-			
-             //echo $currentItem["Area"]  ;
-             //echo  $currentItem["Long"] ;
-			 //echo  $currentItem["Lat"]  ;
-			 // echo  $currentItem["Count"]  ;
+    $currentItem = json_decode($allProducts[$x], true);
 
-      } //	echo $result;
+    //print_r( $currentItem);
+
+    array_push($allItems, $currentItem);
+
+     //echo $currentItem["Area"]  ;
+     //echo  $currentItem["Long"] ;
+     //echo  $currentItem["Lat"]  ;
+     // echo  $currentItem["Count"]  ;
+
+} //	echo $result;
 	  
 	  //print JSON to file
 	 
 	  $response['posts'] = $allItems;
-	  
+
+      $response['keyword'] = $query;
+
 	  $fp = fopen('results.json', 'w');
 	  fwrite($fp, json_encode($response));
 	  fclose($fp);
@@ -91,11 +93,12 @@ if (isset($_POST['keyword']))
 	  //or for now, just pass signal
 	  //redirect to mapping.php
 	  // redirection should be enough signal, because we have the results in the .json file
-		//	  no?
+      //	  no?
+
 	if (!empty($_POST['keyword']))
 	{
 		//redirect
-		header('Location: mapping.php');
+		//header('Location: mapping.php');
 	}	
 	  
 ?>
@@ -229,8 +232,8 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
           <?php
 					//use PHP to run Python script
 		  
-                $str = exec('python ./yelp-python/yelp.py');
-                echo $str;               
+               // $str = exec('python ./yelp-python/yelp.py');
+                //echo $str;
           ?>
       </p>
       <!--button class="btn btn-default btn-lg">Get in Touch</button-->
