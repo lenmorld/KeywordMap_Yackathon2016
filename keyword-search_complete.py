@@ -3,9 +3,9 @@
 import sys, webbrowser, bs4
 import json
 import csv
-from pprint import pprint
-from itertools import islice
-import requests
+#from pprint import pprint
+#from itertools import islice
+#import requests
 
 #+ (sys.argv[1:])
 #print ("PYTHON is working " + str(sys.argv[1:]))
@@ -35,6 +35,11 @@ with open ('geo.json', 'r') as f:
     geo_data = json.load(f)
 
 
+####### open accident + weather JSON file, load to python ######
+with open ('public_data.json', 'r') as f1:
+    public_data = json.load(f1)
+
+
 #need a function check if address contains a given postal code string
 def hasPostal( postal, address ):
     if postal not in address:
@@ -50,27 +55,21 @@ def hasStreet( street, address ):
     else:
         return True
 
-#####################################################
+
 #number of results obtained (from the dataset) at this moment
 N=1724
-
 #num of accidents
 M=7000
-
 #num of Areas
 Z=121
-
 
 # 0_0_0.json is generated from apache_drill.sql
 # apache_drill treats the (gigantic) dataset as a DB that we can query
 # might have to rerun it for accuracy
 # refer to "apache_drill.sql"
 
-
 with open('./output4/0_0_0.json', encoding="utf8") as data_file:    
     data = json.load(data_file)
-
-
 
 #pprint(data)
 #H1A, Pointe-aux-Trembles
@@ -196,8 +195,7 @@ dict = {'H1A' : 'Pointe Aux Tremblay' ,
   'H3Z' : 'Westmount South',
   'H4Z' : 'Tour de la Bourse',
   'H8Z' : 'Pierrefonds',
-        };
-
+        }
 
 dictKeyword = {'H1A' : 0 , 
  'H2A' : 0, 
@@ -320,47 +318,8 @@ dictKeyword = {'H1A' : 0 ,
   'H3Z' : 0,
   'H4Z' : 0,
   'H8Z' : 0
-        };
+        }
 
-######## ACCIDENTS ##################
-accidentAreas = [];
-
-with open('./CAR-CRASHES-2007.csv') as csvfile:
-    data2 = csv.DictReader(csvfile)
-    for row2 in data2:
-        accidentAreas.append( row2['RUE_ACCDN'] );
-
-bikeAccidentAreas = [];
-
-with open('./Montreal bike collisions 2006-10 - Refined.csv') as csvfile:
-    data4 = csv.DictReader(csvfile)
-    for row4 in data4:
-        bikeAccidentAreas.append( row4['Street of accident'] );
-        bikeAccidentAreas.append( row4['Corner street'] );
-
-pedestrianAccidentAreas = [];
-        
-
-with open('./Pedestrian-accidents-2007-REFINED.csv') as csvfile:
-    data5 = csv.DictReader(csvfile)
-    for row5 in data5:
-        bikeAccidentAreas.append( row5['STREET OF ACCIDENT'] );
-        bikeAccidentAreas.append( row5['INTERSECTION'] );
-
-########### WEATHER #############
-weather = [];
-
-with open('./weather2015.csv') as csvfile:
-    data3 = csv.DictReader(csvfile)
-    for row3 in data3:
-        if (row3['Tm'] != '' ):
-            weather.append( row3['Tm'] );
-
-
-
-#for x in accidentAreas : print (x)
-
-        
 accidentPerArea = {'H1A' : 0 , 
  'H2A' : 0, 
  'H3A' : 0, 
@@ -482,8 +441,7 @@ accidentPerArea = {'H1A' : 0 ,
   'H3Z' : 0,
   'H4Z' : 0,
   'H8Z' : 0
-        };
-
+        }
 
 weatherPerArea = {'H1A' : 0 , 
  'H2A' : 0, 
@@ -606,14 +564,9 @@ weatherPerArea = {'H1A' : 0 ,
   'H3Z' : 0,
   'H4Z' : 0,
   'H8Z' : 0
-        }; 
-
+        }
 
 dictItems = dict.items()
-#print (dict['H2L'], dict['H3L'])
-#print "dict['H2L']: "
-
-#init Review-Area dictionary
 
 reviews_area = {}
 i=0
@@ -621,60 +574,18 @@ i=0
 for dictItem in dictItems:
     reviews_area[dictItem[0]] = " "
 
-    
-    #get weather
-    #if weather[i]:
-    weatherPerArea[dictItem[0]] = weather[i]
-    #else:
-	#	weatherPerArea[dictItem[0]] = 0
-    #i = i + 1
-    
-                    
     #print (dictItem)
     for num in range(0,N-1):
         #print("Area:", dictItem[1])
         if hasPostal(dictItem[0], data["results"][num]["full_address"]):
             #concatenate them
             reviews_area[dictItem[0]] = reviews_area[dictItem[0]]  + data["results"][num]["text"]
-            
-            
-            for x in accidentAreas: 
-                if hasStreet(x, data["results"][num]["full_address"]):
-                    #increase the number of accidents per area if match
-                    accidentPerArea[dictItem[0]] = accidentPerArea[dictItem[0]] + 1           
-                    #print (data["results"][num]["full_address"])
-                    #print (row['RUE_ACCDN'])
 
-            for y in bikeAccidentAreas:
-                if hasStreet(y, data["results"][num]["full_address"]):
-                    #increase the number of accidents per area if match
-                    accidentPerArea[dictItem[0]] = accidentPerArea[dictItem[0]] + 1           
-                    #print (data["results"][num]["full_address"])
-                    #print (row['RUE_ACCDN'])
+            ##### accidents counting moved to cacher script ####
 
 
-            for z in pedestrianAccidentAreas:
-                if hasStreet(z, data["results"][num]["full_address"]):
-                    #increase the number of accidents per area if match
-                    accidentPerArea[dictItem[0]] = accidentPerArea[dictItem[0]] + 1           
-                    #print (data["results"][num]["full_address"])
-                    #print (row['RUE_ACCDN'])
-            
 
-'''			
-print("========ACCIDENTS=======")
-
-accidentPerAreaItem = accidentPerArea.items()
-for aItem in accidentPerAreaItem:
-    print (aItem[0] + " " + str(int(aItem[1]/1000)))
-
-print("========TEMPERATURE=======")
-
-weatherPerAreaItem = weatherPerArea.items()
-for wItem in weatherPerAreaItem:
-    print (wItem[0] + " " + str(wItem[1]))
 '''
-        
 #---------------->
 #now we have dict. of review-area
 #we have to get keyword and count the frequency of each one
@@ -684,6 +595,7 @@ for wItem in weatherPerAreaItem:
     #------>print ("=======================")
 
 #print("========KEYWORD RANKS=======")
+'''
 
 for dictItem in dictItems:
     #dictWordRank[dictItem[0]] = "good_great_amazing_bad_worst";
@@ -705,14 +617,11 @@ for dictItem in dictItems:
     worst = string.count("worst")
     never = string.count("never")
     '''
-'''
-    dictKeyword[dictItem[0]]  = "_best:" + str(best) + "_great:" + str(great) + "_amazing:" + str(amazing) + "_awesome:" + str(awesome) + "_love:" + str(love)+ "_like:" + str(like) + "_good:" + str(good)  + "_nice:" + str(nice)  + "_bad:" + str(bad) + "_worse:" + str(worse) + "_worst:" + str(worst) + "_never:" + str(never)  
-	
-'''
+
     
-    #if best==0 and great==0 and amazing==0 and awesome==0 and love==0 and like==0 and good==0 and nice==0 and bad==0 and worse==0 and worst==0 and never==0:
-    #    ctr=1
-    #else:
+#if best==0 and great==0 and amazing==0 and awesome==0 and love==0 and like==0 and good==0 and nice==0 and bad==0 and worse==0 and worst==0 and never==0:
+#    ctr=1
+#else:
 ##    print(dictItem[0]
 ##              + "_best:" + str(best)
 ##              + "_great:" + str(great)
@@ -742,29 +651,25 @@ for num in range(0,10):
 strResult = " "
 resultList = []
 
-
-
 for dictItem in dictItems:
     strResult += str(dictItem[0]) + " " + str(dictItem[1]) + " " +  str(dictKeyword[dictItem[0]])
     
-    tempDict = {'Area': '', 'Name': '', 'Count': 0, 'Lat': 0.0, 'Long': 0.0}
+    tempDict = {'Area': '', 'Name': '', 'Count': 0, 'Lat': 0.0, 'Long': 0.0, 'Accidents': 0, 'Weather': 0}
     tempDict['Area'] =  str(dictItem[0]) 
     tempDict['Name'] =  str(dictItem[1])  
     tempDict['Count'] = dictKeyword[dictItem[0]]
 	
     #add other info
-    tempDict['Accidents'] = accidentPerArea[dictItem[0]]
-    tempDict['Weather'] = weatherPerArea[dictItem[0]]
+    tempDict['Accidents'] = public_data[dictItem[0]][1]
+    tempDict['Weather'] = public_data[dictItem[0]][2]
 
     #get the lat_long for this ZIP CODE
     tempDict['Lat'] = geo_data[dictItem[0]][1]
     tempDict['Long'] = geo_data[dictItem[0]][2]
     
     resultList.append(tempDict)
-    
 
 ### no need to geocode everytime, just load from file #####
-
 '''
     url = 'https://maps.googleapis.com/maps/api/geocode/json'
     params = {'sensor': 'false', 'address': str(dictItem[0]), 'key': 'AIzaSyBopOAX3QmP-e33ns99y7r9Li1StC0wmvQ'}

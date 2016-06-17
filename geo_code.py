@@ -138,8 +138,9 @@ dict = {
   'H3Z' : ['Westmount South' , 0.0, 0.0 ], 
   'H4Z' : ['Tour de la Bourse' , 0.0, 0.0 ], 
   'H8Z' : ['Pierrefonds' , 0.0, 0.0 ], 
-        };
+        }
 
+#note here that dictItems become a pointer to dict, not just a reference
 dictItems = dict.items()
 data = ""
 

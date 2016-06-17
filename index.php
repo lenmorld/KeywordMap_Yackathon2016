@@ -13,14 +13,14 @@ if (isset($_POST['keyword']))
 
     //keyword count + accidents + weather info
     //REALLY SLOW!!! (need to cache data)
-	//$str = exec('python ./keyword-search_complete.py ' . $query );
+	$str = exec('python ./keyword-search_complete.py ' . $query );
 
     //causes
     //Fatal error: Maximum execution time of 30 seconds exceeded in C:\xampp2\htdocs\python\index.php on line 15
 
 
     //just keyword count
-    $str = exec('python ./keyword-search.py ' . $query );
+    //$str = exec('python ./keyword-search.py ' . $query );
 
     //echo $str;
 

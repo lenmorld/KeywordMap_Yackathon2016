@@ -102,7 +102,7 @@ function getResults() {
 
 			//convert to a string to be able to store in HTML localStorage
 
-			//console.log(jsonData);
+			console.log(jsonData);
 
 			obj = JSON.stringify(jsonData);
 			localStorage.setItem("searchResults", obj);
@@ -174,14 +174,14 @@ function getResults() {
 
 	//console.log(datas.posts[0]);
 	//console.log(datas.posts[1]);
-	console.log(datas.posts[1] == null);
+	//console.log(datas.posts[1] == null);
 	//console.log(datas.keyword);
 
 	//console.log("count" + datas.posts.length);
 
 	//console.log(datas.posts[0].Area);
 
-	console.log("length:" + datas.posts.length);
+	//console.log("length:" + datas.posts.length);
 
 	//print HTML table of obtained location tuples
 	htmlString = "<table border='1'>";
@@ -189,8 +189,6 @@ function getResults() {
 		for (x=0; x < datas.posts.length; x++)
 		{
 			//htmlString += "<tr><td>" + datas[x].Area + "</td><td>" + datas[x].Count + "</td><td>" + datas[x].Lat + "</td><td>" + datas[x].Long + "</td><td>" + datas[x].Name + "</td></tr>"	;
-
-
 
 			//console.log( datas.posts[x].Area);
 			//console.log( datas.posts[x].Count);
@@ -202,7 +200,7 @@ function getResults() {
 
 			if (datas.posts[x] == null)
 			{
-				console.log("null object");
+				//console.log("null object");
 			}
 			else
 			{
@@ -258,9 +256,7 @@ function getResults() {
 			}
 			else
 			{
-
 				//console.log(datas.posts[x]);
-
 
 				//customize label based on number of keywords
 				//unfortunately, only 1 char is allowed to display in marker label
@@ -269,8 +265,6 @@ function getResults() {
 				else
 					label = '☺';
 
-
-
 				// new marker
 				var myLatLng2 = {lat: datas.posts[x].Lat, lng: datas.posts[x].Long};
 				var marker2 = new google.maps.Marker({
@@ -278,26 +272,22 @@ function getResults() {
 					map: map,
 					title: datas.posts[x].Name,
 					label: label,
-					html: '<div>Keyword count:' +  datas.posts[x].Count  + '<br />Area: ' +  datas.posts[x].Area   + '<br />' +  datas.posts[x].Name   + '</div>'
+					html: '<div>Keyword count:' +  datas.posts[x].Count  + '<br />Area: ' +  datas.posts[x].Area   + '<br />' +  datas.posts[x].Name + '<br />Accidents:' +  datas.posts[x].Accidents + '<br />Temperature:' +  datas.posts[x].Weather    + '</div>'
 				});
 
 				//add to markers array
 				markers.push(marker2);
-
 
 				//string for info window
 				var infowindow = new google.maps.InfoWindow({
 					content: "hehe"
 				});
 
-
 				console.log(markers[x]);
 
 				/*
 				 //BUGGY: only applies html to last one
-
 				 markers[x].addListener('click', function() {
-
 				 infowindow.setContent(markers[x].html);
 				 infowindow.open(map, markers[x]);
 				 });
@@ -308,31 +298,18 @@ function getResults() {
 
 					infowindow.setContent(this.html);
 					infowindow.open(map, this);
-
 				});
-
-
 				//same as setting the map attrib in marker def
 				//marker2.setMap(map);
 			}
-
-
-
 		} // #END FOR
-
 	}	//end of GoogleMaps init()
-
-
 
 	google.maps.event.addDomListener(window, 'load', initialize);
 
-
 	</script>
 
-
 	<!------------------------------------------------->
-
-
 	<script>
 	$(document).ready(function(){
 	  // Add smooth scrolling to all links in navbar + footer link
@@ -367,7 +344,6 @@ function getResults() {
 	  });
 	});
 	</script>
-
 </div>
 
 
