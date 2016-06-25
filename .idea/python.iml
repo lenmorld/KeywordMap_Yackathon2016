@@ -16,5 +16,6 @@
     </orderEntry>
     <orderEntry type="module" module-name="Practice" />
     <orderEntry type="module" module-name="test2" />
+    <orderEntry type="module" module-name="API" />
   </component>
 </module>
