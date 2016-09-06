@@ -1,4 +1,4 @@
-# Yackathon_keyword_map
+# Salamanders' Keyword Map @ Yackathon 2016
 Yelp Yackathon 2016 - Data Mashup with Yelp Dataset and Publicly Available Dataset
 
 Project: API Keyword Search + Google Map + Public Dataset
