@@ -24,7 +24,7 @@ Programming:
 - Bootstrap HTML CSS for the UI
 
 
-![alt text](screens/results1.PNG?raw=true "Menu")
+![alt text](screens/results2.PNG?raw=true "Menu")
 
 
 
