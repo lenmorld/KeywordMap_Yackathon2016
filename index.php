@@ -77,7 +77,7 @@ for ($x = 0; $x < count($allProducts); $x++) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap Theme Company</title>
+  <title>Salamanders 2.0</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
@@ -87,8 +87,10 @@ for ($x = 0; $x < count($allProducts); $x++) {
 
 </head>
 
+
 <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
 
+<!---- TOP NAVBAR ----->
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container">
     <div class="navbar-header">
@@ -102,10 +104,10 @@ for ($x = 0; $x < count($allProducts); $x++) {
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#about">ABOUT</a></li>
-        <li><a href="#services">SERVICES</a></li>
+        <li><a href="#services">KEYWORDS</a></li>
         <li><a href="#portfolio">PORTFOLIO</a></li>
-        <li><a href="#pricing">PRICING</a></li>
-        <li><a href="#contact">CONTACT</a></li>
+        <li><a href="#pricing">OPTIONS</a></li>
+        <li><a href="#contact">YELP</a></li>
       </ul>
     </div>
   </div>
@@ -122,6 +124,8 @@ for ($x = 0; $x < count($allProducts); $x++) {
     <input type="text" class="form-control" size="50" name="keyword" id="keyword" placeholder="good,bad">
     <button type="submit" class="btn btn-success" name="search" id="search">Search keyword</button>
   </form>
+
+    <img src="yelp_powered_btn_dark@2x.png" alt="powered by Yelp" />
   
 </div>
 
@@ -133,8 +137,9 @@ for ($x = 0; $x < count($allProducts); $x++) {
 		if (isset($allProducts))
 		{
 			  $submitted = "TRUE";
-			  echo htmlspecialchars($submitted); /* You have to escape because the result
-			//									 will not be valid HTML otherwise. */	
+			  //echo htmlspecialchars($submitted);
+            /* You have to escape because the result
+			 will not be valid HTML otherwise. */
 		}
 		else
 		{
@@ -151,11 +156,14 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
 } else {
   alert('The File APIs are not fully supported in this browser.');
 }
-  
+
+
+  /*
     var div = document.getElementById("dom-target");
-    var signalFromPHP = div.textContent;	  
-	if (signalFromPHP == "TRUE") {
-  	//put into map, read values from file
+   // var signalFromPHP = div.textContent;
+	//if (signalFromPHP == "TRUE") {
+
+  	  //put into map, read values from file
 	  //first plan is create markers for each loaded location from file
 	  
 	  //1. open text file - geo.json
@@ -165,16 +173,13 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
 	var mapMarkers = [];
 	//var myLatLng = {lat: 45.5370, lng: -73.59605};
     }
-
-
+    */
 </script>
-<!-- snip -->
-<!---------------------------------->
+
 
 <div id="results"></div>
 
 <div id="googleMap" style="height:400px;width:100%;"></div>
-
 <!-- load data here -->
 <div id="data"></div>
 <!-- scratch -->
@@ -351,21 +356,21 @@ svg.append("g")
   <div class="row text-center slideanim">
     <div class="col-sm-4">
       <div class="thumbnail">
-        <img src="stuff1.jpg" alt="Paris">
+        <!--img src="stuff1.jpg" alt="Paris"-->
         <p><strong>Stuff1</strong></p>
         <p>Stuff the stuff</p>
       </div>
     </div>
     <div class="col-sm-4">
       <div class="thumbnail">
-        <img src="stuff2.jpg" alt="New York">
+        <!--img src="stuff2.jpg" alt="New York"-->
         <p><strong>Stuff2</strong></p>
         <p>Stuff the stuff</p>
       </div>
     </div>
     <div class="col-sm-4">
       <div class="thumbnail">
-        <img src="sanfran.jpg" alt="San Francisco">
+        <!--img src="sanfran.jpg" alt="San Francisco"-->
         <p><strong>Stuff3</strong></p>
         <p>Stuff the stuff</p>
       </div>
@@ -524,7 +529,7 @@ if ($show) {
             <!-- ############## MAPS ########################## -->
 
             <!-- Add Google Maps -->
-            <script src="http://maps.googleapis.com/maps/api/js"></script>
+            <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBztqRH0IXenFXQ8S-jWdA1dabJ6Py_H1c"></script>
             <script>
 
                 console.log("here");
@@ -637,7 +642,8 @@ if ($show) {
                             if (datas.posts[x].Count == 0)
                                 label = '0' ;
                             else
-                                label = '☺';
+                               label = '☺';
+
 
                             // new marker
                             var myLatLng2 = {lat: datas.posts[x].Lat, lng: datas.posts[x].Long};
@@ -648,10 +654,13 @@ if ($show) {
                                 label: label,
                                 html: '<div>Keyword count:' +  datas.posts[x].Count  + '<br />Area: ' +  datas.posts[x].Area   + '<br />' +  datas.posts[x].Name + '<br />Accidents:' +  datas.posts[x].Accidents + '<br />Temperature:' +  datas.posts[x].Weather    + '</div>'
                             });
+							
 
-                            //add to markers array
-                            markers.push(marker2);
+								//add to markers array
+								markers.push(marker2);
 
+							
+							
                             //string for info window
                             var infowindow = new google.maps.InfoWindow({
                                 content: "hehe"
@@ -732,7 +741,7 @@ else {
         <!-- ############## MAPS ########################## -->
 
         <!-- Add Google Maps -->
-        <script src="http://maps.googleapis.com/maps/api/js"></script>
+        <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBztqRH0IXenFXQ8S-jWdA1dabJ6Py_H1c"></script>
         <script>
 
 

@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$USER_HOME$/Desktop/API/.idea/API.iml" filepath="$USER_HOME$/Desktop/API/.idea/API.iml" />
+      <module fileurl="file://$USER_HOME$/Desktop/DJANGO/.idea/DJANGO.iml" filepath="$USER_HOME$/Desktop/DJANGO/.idea/DJANGO.iml" />
       <module fileurl="file://$USER_HOME$/PycharmProjects/Practice/.idea/Practice.iml" filepath="$USER_HOME$/PycharmProjects/Practice/.idea/Practice.iml" />
+      <module fileurl="file://$USER_HOME$/Desktop/Python_Projects/.idea/Python_Projects.iml" filepath="$USER_HOME$/Desktop/Python_Projects/.idea/Python_Projects.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/python.iml" filepath="$PROJECT_DIR$/.idea/python.iml" />
       <module fileurl="file://$USER_HOME$/PycharmProjects/test2/.idea/test2.iml" filepath="$USER_HOME$/PycharmProjects/test2/.idea/test2.iml" />
     </modules>

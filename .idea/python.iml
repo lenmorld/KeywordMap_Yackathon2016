@@ -17,5 +17,7 @@
     <orderEntry type="module" module-name="Practice" />
     <orderEntry type="module" module-name="test2" />
     <orderEntry type="module" module-name="API" />
+    <orderEntry type="module" module-name="DJANGO" />
+    <orderEntry type="module" module-name="Python_Projects" />
   </component>
 </module>
