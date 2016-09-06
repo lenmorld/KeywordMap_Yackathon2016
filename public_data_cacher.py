@@ -284,7 +284,7 @@ dictKeyword = {'H1A' : 0 ,
 ######## ACCIDENTS ##################
 accidentAreas = []
 
-with open('./CAR-CRASHES-2007.csv') as csvfile:
+with open('./csv/CAR-CRASHES-2007.csv') as csvfile:
     data2 = csv.DictReader(csvfile)
     for row2 in data2:
         accidentAreas.append(row2['RUE_ACCDN'])
@@ -299,7 +299,7 @@ with open('./Montreal bike collisions 2006-10 - Refined.csv') as csvfile:
 
 pedestrianAccidentAreas = []
 
-with open('./Pedestrian-accidents-2007-REFINED.csv') as csvfile:
+with open('./csv/Pedestrian-accidents-2007-REFINED.csv') as csvfile:
     data5 = csv.DictReader(csvfile)
     for row5 in data5:
         bikeAccidentAreas.append(row5['STREET OF ACCIDENT'])
@@ -309,7 +309,7 @@ with open('./Pedestrian-accidents-2007-REFINED.csv') as csvfile:
 ########### WEATHER #############
 weather = []
 
-with open('./weather2015.csv') as csvfile:
+with open('./csv/weather2015.csv') as csvfile:
     data3 = csv.DictReader(csvfile)
     for row3 in data3:
         if (row3['Tm'] != '' ):
